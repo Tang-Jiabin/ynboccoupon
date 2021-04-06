@@ -1,0 +1,6 @@
+2021-04-06 08:56:41.186  WARN 7895 --- [mysql housekeeper] com.zaxxer.hikari.pool.HikariPool        : mysql - Thread starvation or clock leap detected (housekeeper delta=13h41m35s171ms).
+2021-04-06 08:56:56.341  INFO 7895 --- [SpringContextShutdownHook] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'taskScheduler'
+2021-04-06 08:56:56.342  INFO 7895 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2021-04-06 08:56:56.351  INFO 7895 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-04-06 08:56:56.358  INFO 7895 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : mysql - Shutdown initiated...
+2021-04-06 08:56:56.371  INFO 7895 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : mysql - Shutdown completed.

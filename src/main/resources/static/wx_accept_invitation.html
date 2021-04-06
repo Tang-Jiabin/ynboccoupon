@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>接受邀请</title>
+    <link href="css/master.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script>
+        appData.share = getAddressBarParam("share")
+
+        $(document).ready(function () {
+
+            $("#huodongguize").click(function () {
+                $(".huodongguize_bg").show();
+            });
+            $(".close5").click(function () {
+                $(".cover,.covers2,.shibai_bg").hide();
+            });
+        });
+
+        function accept(){
+            let phone = $('#phone1').val();
+            if(isEmpty(phone)){
+                alert("手机号不能为空");
+                return
+            }
+            if(isEmpty(appData.share)){
+                alert("邀请者信息错误")
+                return
+            }
+            $.ajax({
+                url: appData.domain + "/ynboccoupon/user/acceptInvitation",
+                type: 'post',
+                data: {'share':appData.share,'phone':phone},
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status === 200) {
+                        location.href = "./wx_index.html"
+                    } else {
+                        alert(data.msg)
+                        if (data.status === 401) {
+                            location.href = "./wx_index.html"
+                        }
+                    }
+                },
+                error: function (data) {
+                }
+            })
+        }
+
+    </script>
+</head>
+
+<body style="background-image: linear-gradient(to right, #ff7a22 , #ff5635);">
+<div class="banner"><img alt="" src="images/yaoqinghaoyou.png"></div>
+<div class="main2">
+
+    <div class="buzhou_c3">
+        <div class="link"><img alt="" src="images/link.png">
+
+        </div>
+
+        <div class="yaoqing_txt"><img alt="" src="images/txt1.png"><input id="phone1" name="" type="text" placeholder="请输入您的手机号码"
+                                                                   class="txt2"></div>
+        <div onclick="accept()" class="yaoqing_but"><a href="#"><img alt="" src="images/jieshouyaoqing.png"></a></div>
+    </div>
+
+
+</div>
+</body>
+</html>

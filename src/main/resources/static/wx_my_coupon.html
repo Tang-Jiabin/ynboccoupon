@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>我的立减金</title>
+    <link href="css/master.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+            let token = getAddressBarParam(appData.token)
+
+            let adToken = localStorage.getItem(appData.token)
+
+            isEmpty(token) ? isEmpty(adToken) ? relogin() : localStorage.setItem(appData.token, adToken) : localStorage.setItem(appData.token, token)
+
+            $("#huodongguize").click(function () {
+                $(".huodongguize_bg").show();
+            });
+            $(".close5").click(function () {
+                $(".cover,.covers2,.shibai_bg").hide();
+            });
+
+        });
+
+        function relogin() {
+            alert("请重新登录")
+            location.href = "./wx_index.html"
+        }
+
+    </script>
+</head>
+
+<body>
+<div class="banner"><img alt="" src="images/banner3.png"></div>
+
+<div class="main2">
+    <div class="main_t">获取立减金记录</div>
+    <ul class="jilu_list">
+        <li class="jilu1"><span><a href="wx_coupon_list.html?month=1">立即查看</a></span>1月获取立减金记录</li>
+        <li class="jilu2"><span><a href="wx_coupon_list.html?month=2">立即查看</a></span>2月获取立减金记录</li>
+        <li class="jilu3"><span><a href="wx_coupon_list.html?month=3">立即查看</a></span>3月获取立减金记录</li>
+        <li class="jilu4"><span><a href="wx_coupon_list.html?month=4">立即查看</a></span>4月获取立减金记录</li>
+        <li class="jilu1"><span><a href="wx_coupon_list.html?month=5">立即查看</a></span>5月获取立减金记录</li>
+        <li class="jilu2"><span><a href="wx_coupon_list.html?month=6">立即查看</a></span>6月获取立减金记录</li>
+        <li class="jilu3"><span><a href="wx_coupon_list.html?month=7">立即查看</a></span>7月获取立减金记录</li>
+        <li class="jilu4"><span><a href="wx_coupon_list.html?month=8">立即查看</a></span>8月获取立减金记录</li>
+        <li class="jilu1"><span><a href="wx_coupon_list.html?month=9">立即查看</a></span>9月获取立减金记录</li>
+        <li class="jilu2"><span><a href="wx_coupon_list.html?month=10">立即查看</a></span>10月获取立减金记录</li>
+        <li class="jilu3"><span><a href="wx_coupon_list.html?month=11">立即查看</a></span>11月获取立减金记录</li>
+        <li class="jilu4"><span><a href="wx_coupon_list.html?month=12">立即查看</a></span>12月获取立减金记录</li>
+    </ul>
+    <div class="lingqu_t"><img alt="" src="images/buzhou_t2.png"></div>
+    <div class="lingqu_c">
+        <p><img alt="" src="images/buzhou1_2.png"></p>
+        <p><img alt="" src="images/buzhou2_2.png"></p>
+        <p><img alt="" src="images/buzhou3_2.png"></p>
+
+    </div>
+</div>
+
+</body>
+</html>

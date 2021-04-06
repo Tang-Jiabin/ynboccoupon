@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>月月领立减金</title>
+    <link href="css/master.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="js/yzm.js"></script>
+    <script>
+        let openId;
+        $(document).ready(function () {
+            openId = getAddressBarParam("openId");
+
+            if (isEmpty(openId)) {
+                alert("请重新授权")
+                window.location.href = "./wx_index.html"
+            }
+            $("#huodongguize").click(function () {
+                $(".huodongguize_bg").show();
+            });
+            $(".close5").click(function () {
+                $(".cover,.covers2,.shibai_bg").hide();
+            });
+
+        });
+
+        function login() {
+            let phone = $('#phone1').val();
+            let code = $('#code1').val();
+
+            if (isEmpty(phone) || isEmpty(code) || phone === '请输入手机号' || code === '请输入验证码') {
+                alert("手机号或验证码不能为空");
+                return
+            }
+            $.ajax({
+                url: appData.domain + "/ynboccoupon/user/mobileLogin",
+                type: 'post',
+                data: {'mobile': phone, 'code': code, 'openId': openId},
+                dataType: 'json',
+                error: function (data) {
+                },
+                success: function (data) {
+                    if (data.status === 200) {
+                        localStorage.setItem(appData.token, data.data)
+                        location.href = './wx_my_coupon.html'
+                    } else {
+                        alert(data.msg)
+                    }
+                }
+            })
+        }
+
+    </script>
+</head>
+
+<body>
+<div class="banner"><img src="images/banner3.png"></div>
+
+<div class="lijianjin_card2">
+    <div class="biaodan">
+        <div class="biaodan1">
+            <input type="text" value="请输入手机号" class="txt1" id="phone1"
+                   onfocus="if(this.value==defaultValue) {this.value='';this.type='text'}"
+                   onblur="if(!value) {value=defaultValue; this.type='text';}"/>
+        </div>
+        <div class="biaodan2"><span>
+        <input id="btnSendCode1" type="button" class="yanzhengma" value="获取验证码" onClick="sendMessage1()"/>
+        </span>
+            <input type="text" value="请输入验证码" class="txt1" id="code1"
+                   onfocus="if(this.value==defaultValue) {this.value='';this.type='text'}"
+                   onblur="if(!value) {value=defaultValue; this.type='text';}"/>
+        </div>
+        <div class="clear"></div>
+        <div class="biaodan3">
+            <input name="" type="button" class="but1" id="yindao" onclick="login()"/>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

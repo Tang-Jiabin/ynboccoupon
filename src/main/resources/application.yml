@@ -1,0 +1,48 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /ynboccoupon
+
+spring:
+  datasource:
+    name: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #基本属性
+    url: jdbc:mysql://rm-2ze86h7sw4xwta0h2ao.mysql.rds.aliyuncs.com:3306/yn_boc_coupon?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&autoReconnect=true
+    username: zy_tjb
+    password: zykj@tjb123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: com.zykj.yn.boc.coupon.Mysql5Utf8mb4
+    open-in-view: false
+  redis:
+    host: 101.200.220.90
+    port: 6379
+    password: zykj@123
+    database: 10
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+logging:
+  level:
+    root: info
+  file:
+    name: ./logs/coupon.log
+
+coupon:
+  merchantNo: '104130173720026'
+  callbackUrl: 'https://boc.pay.zhongyunkj.cn/ynboccoupon/pay/payCallback'
+  keyStorePath: '/secret/104130173720026.pfx'
+  keystorePwd: 'zykj123456'
+  certificatePath: '/secret/zykey.cer'
+  storePath: '/secret/zykj.keystore'
+  alias: 'zykj'
+  storePw: 'zykj123zykj'
+  keyPw: 'zykj123zykj'
+  appId: 'wxe14bbe2f8956c929'
+  appSecret: '84919323dcf16e15cd5dc9c16220d371'
+  wxDomain: 'https://ynwechat.zhongyunkj.cn/ynboccoupon/'
+  bocDomain: 'https://boc.pay.zhongyunkj.cn/ynboccoupon/'

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>立减金列表</title>
+    <link href="css/master.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script>
+        let month
+        $(document).ready(function () {
+
+            month = getAddressBarParam("month")
+
+            $("#huodongguize").click(function () {
+                $(".huodongguize_bg").show();
+            });
+            $(".close5").click(function () {
+                $(".cover,.covers2,.shibai_bg").hide();
+            });
+
+            getCouponByMonth();
+
+        });
+
+        function getCouponByMonth() {
+            $.ajax({
+                url: appData.domain + "/ynboccoupon/coupon/getCouponByMonth",
+                type: 'get',
+                data: {month: month},
+                dataType: 'json',
+                beforeSend: function (request) {
+                    request.setRequestHeader("X-Auth-Token", localStorage.getItem(appData.token));
+                },
+                success: function (data) {
+                    if (data.status === 200) {
+                        showCoupon(data.data)
+                    } else {
+                        alert(data.msg)
+                        if (data.status === 401) {
+                            location.href = "./boc_index.html"
+                        }
+                    }
+                },
+                error: function (data) {
+                }
+            })
+        }
+
+        function showCoupon(data) {
+            let liHtml = ''
+            for (let i = 0; i < data.length; i++) {
+                let state = ''
+                if ('NOT_RE' === data[i].state) {
+                    state = '<div class="zhuangtai"><img alt="" src="images/not_re.png"></div><div class="lijianjin_l zhengchang">￥<strong>' + data[i].money + '</strong><br>立减金</div>'
+                }
+                if ('NOT_USED' === data[i].state) {
+                    state = '<div class="zhuangtai"><img alt="" src="images/not_used.png"></div><div class="lijianjin_l zhengchang">￥<strong>' + data[i].money + '</strong><br>立减金</div>'
+                }
+                if ('USED' === data[i].state) {
+                    state = '<div class="zhuangtai"><img alt="" src="images/yishiyong.png"></div><div class="lijianjin_l zhengchang">￥<strong>' + data[i].money + '</strong><br>立减金</div><div class="zhuangtai"><img alt="" src="images/yishiyong.png"></div>'
+                }
+                if ('EXPIRED' === data[i].state) {
+                    state = '<div class="zhuangtai"><img alt="" src="images/yiguoqi.png"></div><div class="lijianjin_l guoqi">￥<strong>' + data[i].money + '</strong><br>立减金</div><div class="zhuangtai"><img alt="" src="images/yiguoqi.png"></div>'
+                }
+                liHtml += '<li>' + state +
+                    '<div class="lijianjin_r">' +
+                    '<div class="lijianjin_r1">' + data[i].money + '元微信立减金</div>' +
+                    '<div class="lijianjin_r2">获取时间：' + data[i].createDate + '</div>' +
+                    '<div class="clear"></div>' +
+                    '</div>' +
+                    '</li>'
+            }
+            $('#ulHtml').html(liHtml)
+        }
+
+    </script>
+</head>
+
+<body>
+<div class="banner"><img alt="" src="images/banner3.png"></div>
+
+<div class="main2">
+    <ul class="lijianjin_list" id="ulHtml">
+
+    </ul>
+
+
+</div>
+
+</body>
+</html>

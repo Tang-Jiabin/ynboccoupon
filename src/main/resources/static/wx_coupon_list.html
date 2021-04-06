@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+    <title>立减金列表</title>
+    <link href="css/master.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="./js/common.js"></script>
+    <script type="text/javascript">
+        let month = 0;
+        $(document).ready(function () {
+            month = getAddressBarParam("month")
+
+            $(".lingqu").click(function () {
+                $(".lingqu_bg").show();
+            });
+            $(".know").click(function () {
+                $(".lingqu_bg").hide();
+            });
+            getCouponByMonth();
+        });
+
+        function getCouponByMonth() {
+            $.ajax({
+                url: appData.domain + "/ynboccoupon/coupon/getCouponByMonth",
+                type: 'get',
+                data: {month: month},
+                dataType: 'json',
+                beforeSend: function (request) {
+                    request.setRequestHeader("X-Auth-Token", localStorage.getItem(appData.token));
+                },
+                success: function (data) {
+                    if (data.status === 200) {
+                        showCoupon(data.data)
+                    } else {
+                        alert(data.msg)
+                        if (data.status === 401) {
+                            location.href = "./wx_index.html"
+                        }
+                    }
+                },
+                error: function (data) {
+                }
+            })
+        }
+
+        function showCoupon(data) {
+            let liHtml = ''
+            for (let i = 0; i < data.length; i++) {
+                let state = ''
+                let receive = ''
+                if ('NOT_RE' === data[i].state) {
+                    state = '<div class="zhuangtai"><img alt="" src="images/not_re.png"></div><div class="lijianjin_l zhengchang">￥<strong>' + data[i].money + '</strong><br>立减金</div>'
+                    receive = '<div class="lijianjin_r4"><a href="'+data[i].link+'" class="lingqu">点击领取</a></div>'
+                }
+                if ('NOT_USED' === data[i].state) {
+                    state = '<div class="zhuangtai"><img alt="" src="images/not_used.png"></div><div class="lijianjin_l zhengchang">￥<strong>' + data[i].money + '</strong><br>立减金</div>'
+                }
+                if ('USED' === data[i].state) {
+                    state = '<div class="zhuangtai"><img alt="" src="images/yishiyong.png"></div><div class="lijianjin_l zhengchang">￥<strong>' + data[i].money + '</strong><br>立减金</div><div class="zhuangtai"><img alt="" src="images/yishiyong.png"></div>'
+                }
+                if ('EXPIRED' === data[i].state) {
+                    state = '<div class="zhuangtai"><img alt="" src="images/yiguoqi.png"></div><div class="lijianjin_l guoqi">￥<strong>' + data[i].money + '</strong><br>立减金</div><div class="zhuangtai"><img alt="" src="images/yiguoqi.png"></div>'
+                }
+                liHtml += '<li>' + state +
+                    '<div class="lijianjin_r">' +
+                    '<div class="lijianjin_r1">' + data[i].money + '元微信立减金</div>' +
+                    '<div class="lijianjin_r2">获取时间：' + data[i].createDate + '</div>' +
+                    '<div class="clear"></div>' +
+                    receive +
+                    '</div>' +
+                    '</li>'
+            }
+            $('#ulHtml').html(liHtml)
+        }
+
+    </script>
+</head>
+
+<body>
+<div class="banner"><img alt="" src="images/banner3.png"></div>
+<div class="main2">
+    <ul class="lijianjin_list" id="ulHtml">
+<!--        <li>-->
+<!--            <div class="lijianjin_l zhengchang">￥<strong>5</strong><br>-->
+<!--                立减金-->
+<!--            </div>-->
+<!--            <div class="lijianjin_r">-->
+<!--                <div class="lijianjin_r3"><strong>5元微信立减金</strong><br>-->
+<!--                    获取时间：2021-01-10 11:56:30-->
+<!--                </div>-->
+<!--                <div class="lijianjin_r4"><a href="javascript:void(0)" class="lingqu">点击领取</a></div>-->
+<!--                <div class="clear"></div>-->
+<!--            </div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <div class="lijianjin_l zhengchang">￥<strong>5</strong><br>-->
+<!--                立减金-->
+<!--            </div>-->
+<!--            <div class="lijianjin_r">-->
+<!--                <div class="lijianjin_r3"><strong>5元微信立减金</strong><br>-->
+<!--                    获取时间：2021-01-10 11:56:30-->
+<!--                </div>-->
+<!--                <div class="lijianjin_r4"><a href="javascript:void(0)" class="lingqu">点击领取</a></div>-->
+<!--                <div class="clear"></div>-->
+<!--            </div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <div class="lijianjin_l zhengchang">￥<strong>5</strong><br>-->
+<!--                立减金-->
+<!--            </div>-->
+<!--            <div class="lijianjin_r">-->
+<!--                <div class="lijianjin_r3"><strong>5元微信立减金</strong><br>-->
+<!--                    获取时间：2021-01-10 11:56:30-->
+<!--                </div>-->
+<!--                <div class="lijianjin_r4"><a href="javascript:void(0)" class="lingqu">点击领取</a></div>-->
+<!--                <div class="clear"></div>-->
+<!--            </div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <div class="lijianjin_l zhengchang">￥<strong>5</strong><br>-->
+<!--                立减金-->
+<!--            </div>-->
+<!--            <div class="lijianjin_r">-->
+<!--                <div class="lijianjin_r3"><strong>5元微信立减金</strong><br>-->
+<!--                    获取时间：2021-01-10 11:56:30-->
+<!--                </div>-->
+<!--                <div class="lijianjin_r4"><a href="javascript:void(0)" class="lingqu">点击领取</a></div>-->
+<!--                <div class="clear"></div>-->
+<!--            </div>-->
+<!--        </li>-->
+<!--        <li>-->
+<!--            <div class="lijianjin_l zhengchang">￥<strong>5</strong><br>-->
+<!--                立减金-->
+<!--            </div>-->
+<!--            <div class="lijianjin_r">-->
+<!--                <div class="lijianjin_r3"><strong>5元微信立减金</strong><br>-->
+<!--                    获取时间：2021-01-10 11:56:30-->
+<!--                </div>-->
+<!--                <div class="lijianjin_r4"><a href="javascript:void(0)" class="lingqu">点击领取</a></div>-->
+<!--                <div class="clear"></div>-->
+<!--            </div>-->
+<!--        </li>-->
+    </ul>
+</div>
+<!--提醒-->
+<div class="lingqu_bg" style="display:none">
+    <div class="lingqu_pic"><img alt="" src="images/tixing_bg.png">
+        <div class="lingqu_txt">
+            <p><strong>领取成功</strong>
+            <p>您可以在微信<span>【我】-【卡包】</span><br>
+                里面查看立减金券码
+            <p><a href="javascript:void(0)" class="know"><img alt="" src="images/zhidaole.png"></a></p>
+        </div>
+    </div>
+</div>
+</body>
+</html>
